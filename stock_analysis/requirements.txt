@@ -1,0 +1,7 @@
+yfinance
+pandas
+numpy
+tqdm
+# Add cudf and cupy for GPU acceleration in Colab (optional, handled by setup/config)
+# cudf-cu11 --extra-index-url https://pypi.nvidia.com
+# cupy-cuda11x --extra-index-url https://pypi.nvidia.com
