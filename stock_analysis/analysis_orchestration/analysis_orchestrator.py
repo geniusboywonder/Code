@@ -43,14 +43,14 @@ class AnalysisOrchestrator:
 
         Args:
             symbol: The stock symbol.
-            start_date: The start date for data fetching (Note: get_stock_data determines actual start).
-            end_date: The end date for data fetching.
+            start_date: The start date for data fetching (Note: get_stock_data determines actual start, can be None).
+            end_date: The end date for data fetching (defaults to yesterday if None).
 
         Returns:
             A StockData object with historical data (as configured DataFrame),
             indicators, and model recommendations, or None if data fetching fails.
         """
-        # get_stock_data now returns the configured DataFrame type
+        # get_stock_data now returns the configured DataFrame type and handles default end_date
         stock_data = get_stock_data(symbol, end_date)
 
         if stock_data is None:

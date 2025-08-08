@@ -18,20 +18,24 @@ from stock_analysis.reporting.report_generator import generate_analysis_report
 # from stock_analysis.data_structures.stock_data import StockData
 
 
-def run_full_analysis_test(symbol: str, end_date: str):
+def run_full_analysis_test(symbol: str, end_date: str = None):
     """
     Runs a full analysis pipeline test for a given stock symbol and end date.
+    If end_date is None, defaults to yesterday.
     """
-    print(f"--- Running Full Analysis Test for {symbol} ---")
+    end_date_display = end_date if end_date else "yesterday (default)"
+    print(f"--- Running Full Analysis Test for {symbol} (end date: {end_date_display}) ---")
 
     orchestrator = AnalysisOrchestrator()
 
-    # The orchestrator now handles determining the start date based on indicator needs
-    # Passing None for start_date as orchestrator determines it
+    # The orchestrator and get_stock_data now handle determining the start date based on work day requirements
+    # Passing None for start_date as it's calculated automatically
     stock_data = orchestrator.run_analysis(symbol, None, end_date)
 
     if stock_data:
         print(f"\nSuccessfully analyzed data for {stock_data.symbol}.")
+        if stock_data.note:
+            print(f"Data info: {stock_data.note}")
         print("\n--- Analysis Report ---")
         report = generate_analysis_report(stock_data)
         print(report)
@@ -43,9 +47,9 @@ def run_full_analysis_test(symbol: str, end_date: str):
 
 if __name__ == "__main__":
     # Define the symbol and end date for the test
-    # Using a common symbol and a recent date
+    # Using a common symbol and default to yesterday
     test_symbol = 'GOOG'
-    test_end_date = '2024-07-31'
+    test_end_date = None  # Will default to yesterday
 
     run_full_analysis_test(test_symbol, test_end_date)
 

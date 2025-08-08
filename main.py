@@ -38,8 +38,12 @@ def main():
         print("No stock symbols entered. Exiting.")
         return
 
-    start_date = input("Enter start date (YYYY-MM-DD): ")
-    end_date = input("Enter end date (YYYY-MM-DD): ")
+    # End date defaults to yesterday, start date is calculated automatically
+    end_date_input = input("Enter end date (YYYY-MM-DD) or press Enter for yesterday: ").strip()
+    end_date = end_date_input if end_date_input else None
+    
+    # Start date is now calculated automatically to ensure 200+ work days
+    start_date = None  # Not used anymore, but kept for compatibility
 
     orchestrator = AnalysisOrchestrator()
 
@@ -54,6 +58,8 @@ def main():
             # The report generator is responsible for handling the configured DataFrame/Series types
             report = generate_analysis_report(stock_data)
             print(report)
+            if stock_data.note:
+                print(f"Note: {stock_data.note}")
         else:
             print(f"Could not analyze {symbol}.")
 
